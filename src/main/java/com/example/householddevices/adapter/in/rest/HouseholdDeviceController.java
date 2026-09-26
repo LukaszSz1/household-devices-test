@@ -36,6 +36,10 @@ public class HouseholdDeviceController {
     private HouseholdDeviceResponse getHouseholdDevices(@PathVariable Long id) {
         log.info("Getting household devices for id {}", id);
 
+
+
+
+
         return null;
     }
 
