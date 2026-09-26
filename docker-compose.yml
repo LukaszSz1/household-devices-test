@@ -1,0 +1,17 @@
+version: '1'
+services:
+  sls-household-devices-postgres:
+    image: postgres:18
+    environment:
+      - POSTGRES_DB=household_devices
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - household-devices-db-data:/var/lib/postgresql/data/pgdata
+
+volumes:
+  household-devices-db-data:
+    driver: local
+

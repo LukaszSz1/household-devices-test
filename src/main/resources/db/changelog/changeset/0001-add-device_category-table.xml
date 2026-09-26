@@ -1,0 +1,18 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="0001-add-device_category-table.xml" author="lszwedo" logicalFilePath="changelog/changeset/0001-add-device_category-table.xml">
+        <sql>
+            CREATE TABLE device_category (
+                code   VARCHAR(5)   NOT NULL,
+                title  VARCHAR(100) NOT NULL,
+                active BOOLEAN      NOT NULL,
+
+                CONSTRAINT pk_device_category_code PRIMARY KEY (code)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

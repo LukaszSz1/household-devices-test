@@ -1,0 +1,76 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="0001-add-household_device-table" author="lszwedo" logicalFilePath="changelog/changeset/0001-add-household_device-table.xml">
+        <sql>
+            CREATE TABLE household_device (
+                id                   INTEGER        NOT NULL,
+                category_code        VARCHAR(5)     NOT NULL,
+                type_code            VARCHAR(5)     NOT NULL,
+                brand_code           VARCHAR(5)     NOT NULL,
+                device_model         VARCHAR(50)    NOT NULL,
+                device_serial_number VARCHAR(50)    NOT NULL,
+                built_in             BOOLEAN        NOT NULL,
+                status_code          VARCHAR(5)     NOT NULL,
+                active               BOOLEAN        NOT NULL,
+
+                CONSTRAINT pk_household_device_id PRIMARY KEY (id)
+            );
+
+            CREATE SEQUENCE household_device_id_seq;
+
+            ALTER TABLE household_device
+                ADD COLUMN purchase_date VARCHAR(7),
+                ADD COLUMN purchased_new BOOLEAN;
+
+            ALTER TABLE household_device_audit
+                ADD COLUMN purchase_date VARCHAR(7),
+                ADD COLUMN purchased_new BOOLEAN;
+
+            ALTER TABLE household_device_intake
+                ADD COLUMN purchase_date VARCHAR(7),
+                ADD COLUMN purchased_new BOOLEAN;
+        </sql>
+
+        <sql>
+            ALTER TABLE household_device
+                ADD COLUMN operator VARCHAR(50);
+            ALTER TABLE household_device_audit
+                ADD COLUMN operator VARCHAR(50);
+        </sql>
+
+        <sql>
+            ALTER TABLE household_device
+                ADD COLUMN description VARCHAR(150);
+
+            ALTER TABLE household_device_audit
+                ADD COLUMN description VARCHAR(150);
+        </sql>
+
+        <sql>
+            ALTER TABLE household_device
+                ALTER COLUMN device_model DROP NOT NULL;
+        </sql>
+
+        <sql>
+            ALTER TABLE household_device
+                ADD COLUMN created_date TIMESTAMP WITHOUT TIME ZONE;
+
+            CREATE INDEX household_device_created_date_idx ON household_device (created_date);
+        </sql>
+
+        CREATE SEQUENCE household_device_id_seq;
+
+        ALTER TABLE household_device
+        ADD CONSTRAINT fk_category_code_to_household_device FOREIGN KEY (category_code) REFERENCES device_category (code),
+        ADD CONSTRAINT fk_type_code_to_household_device FOREIGN KEY (type_code) REFERENCES device_type (code),
+        ADD CONSTRAINT fk_brand_code_to_household_device FOREIGN KEY (brand_code) REFERENCES device_brand (code);
+
+
+
+
+    </changeSet>
+
+</databaseChangeLog>
